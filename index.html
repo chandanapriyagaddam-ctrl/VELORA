@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VELORA – Home</title>
+
+<style>
+/* ---------------- GLOBAL THEME ---------------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a 0%, #000000 70%);
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ---------------- BACKGROUND OVERLAY IMAGE ---------------- */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("overlay.png") center top / cover no-repeat;
+    opacity: 0.12; /* adjust transparency */
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Container helper for sections */
+.section-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ---------------- HEADER ---------------- */
+header {
+    padding: 45px 20px 20px;
+}
+
+header h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #ff0040, #ff5277);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+header p {
+    margin-top: 8px;
+    color: #d1d1d1;
+    font-size: 18px;
+}
+
+/* ---------------- USER BADGE (TOP RIGHT) ---------------- */
+#user-badge {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    background: rgba(255, 0, 64, 0.15);
+    border: 1px solid rgba(255, 0, 64, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 12px rgba(255, 0, 64, 0.45);
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+#user-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(255, 0, 64, 0.7);
+}
+
+.user-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff5277, #ff0040);
+}
+
+/* ---------------- MAIN CARDS ---------------- */
+.card-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: nowrap;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card {
+    width: 260px;
+    padding: 20px;
+    background: #0d0d0d;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 0, 64, 0.4);
+    box-shadow: 0 0 25px rgba(255, 0, 64, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(255, 0, 64, 0.55);
+}
+
+.card h3 {
+    color: #ff5277;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #d1d1d1;
+    font-size: 14px;
+}
+
+.section-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ---------------- REVIEWS SECTION ---------------- */
+.section-title {
+    margin-top: 70px;
+    margin-bottom: 16px;
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(to right, #ff0040, #ff5277);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: #b5b5b5;
+    margin-bottom: 28px;
+}
+
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+}
+
+.review-card {
+    flex: 1 1 280px;
+    max-width: 330px;
+    background: #0d0d0d;
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: left;
+    border: 1px solid rgba(255,0,64,0.35);
+    box-shadow: 0 0 18px rgba(255,0,64,0.25);
+}
+
+.review-name {
+    font-weight: 600;
+    color: #ff9fb8;
+    margin-bottom: 4px;
+}
+
+.review-tag {
+    font-size: 12px;
+    color: #aaaaaa;
+    margin-bottom: 8px;
+}
+
+.review-text {
+    font-size: 13px;
+    color: #e0e0e0;
+}
+
+/* ---------------- CUSTOMER (WHO IT'S FOR) SECTION ---------------- */
+.customer-section {
+    margin-top: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+}
+
+.customer-left, .customer-right {
+    flex: 1 1 300px;
+    max-width: 500px;
+    background: #0d0d0d;
+    border-radius: 18px;
+    padding: 20px 18px;
+    border: 1px solid rgba(255,0,64,0.35);
+    box-shadow: 0 0 18px rgba(255,0,64,0.25);
+}
+
+.customer-left h3,
+.customer-right h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #ff5277;
+}
+
+.customer-left p,
+.customer-right p,
+.customer-right li {
+    font-size: 14px;
+    color: #dcdcdc;
+}
+
+.customer-right ul {
+    padding-left: 18px;
+    margin: 8px 0 0;
+}
+
+/* ---------------- ABOUT SECTION ---------------- */
+.about-section {
+    margin-top: 70px;
+    margin-bottom: 60px;
+    background: #050505;
+    border-top: 1px solid rgba(255,0,64,0.25);
+    padding: 30px 0 40px;
+}
+
+.about-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-inner h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #ff5277;
+}
+
+.about-inner p {
+    font-size: 14px;
+    color: #d1d1d1;
+    line-height: 1.6;
+}
+
+.about-inner small {
+    display: block;
+    margin-top: 14px;
+    color: #888;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ---------------- USER BADGE ---------------- -->
+<div id="user-badge" onclick="goToProfile()">
+    <span class="user-icon"></span>
+    <span id="username-display">Guest</span>
+</div>
+
+<!-- ---------------- HEADER ---------------- -->
+<header>
+    <div class="section-container">
+        <h1>VELORA</h1>
+        <p>A gentle rhythm of life, reimagined in neon.</p>
+    </div>
+</header>
+
+<!-- ---------------- MAIN CARDS ---------------- -->
+<div class="card-container">
+
+    <!-- Track Period -->
+    <div class="card" onclick="location.href='period.html'">
+        <h3>Track Your Period</h3>
+        <p>Smart cycle predictions, ovulation, and a 3-month calendar view.</p>
+    </div>
+
+    <!-- NEW: Flow Self-Check -->
+    <div class="card" onclick="location.href='flow.html'">
+        <h3>Period Flow Self-Check</h3>
+        <p>Log bleeding intensity and see what it may mean for your health.</p>
+    </div>
+
+    <!-- PCOD / PCOS -->
+    <div class="card" onclick="location.href='pcod.html'">
+        <h3>PCOD / PCOS</h3>
+        <p>Learn what it means, symptoms to watch, and gentle ways to manage it.</p>
+    </div>
+
+    <!-- Nutrition -->
+    <div class="card" onclick="location.href='nutrition.html'">
+        <h3>Nutrition & Health</h3>
+        <p>Diet, lifestyle and wellness tips for periods and PCOD.</p>
+    </div>
+
+</div>
+<!-- ---------------- REVIEWS SECTION ---------------- -->
+<section class="section-container">
+    <h2 class="section-title">What our users say</h2>
+    <p class="section-subtitle">VELORA is designed with you in mind. Here’s how it feels to use it.</p>
+
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="review-name">Aarushi, 21</div>
+            <div class="review-tag">Irregular cycles</div>
+            <div class="review-text">“VELORA finally made my cycle make sense. The predictions feel calming and accurate.”</div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-name">Meera, 26</div>
+            <div class="review-tag">Working professional</div>
+            <div class="review-text">“I love how simple everything is. It feels like a safe space to track my cycle.”</div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-name">Sara, 24</div>
+            <div class="review-tag">PCOS warrior</div>
+            <div class="review-text">“The PCOD/PCOS section helped me ask the right questions at my doctor visit!”</div>
+        </div>
+    </div>
+</section>
+
+<!-- ---------------- CUSTOMER SECTION ---------------- -->
+<section class="section-container">
+    <div class="customer-section">
+        <div class="customer-left">
+            <h3>Made for real users</h3>
+            <p>VELORA is built for anyone navigating periods, irregular cycles, PCOD or PCOS — with softness, clarity, and calm design.</p>
+        </div>
+
+        <div class="customer-right">
+            <h3>Why choose VELORA?</h3>
+            <p>Our users love VELORA because it's:</p>
+            <ul>
+                <li>Simple and intuitive</li>
+                <li>Focused on awareness, not perfection</li>
+                <li>Supportive and gentle</li>
+                <li>A safe personal space</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ---------------- ABOUT SECTION ---------------- -->
+<section class="about-section">
+    <div class="about-inner">
+        <h3>About VELORA</h3>
+        <p>
+            VELORA was created to make cycle tracking feel softer and more intuitive — 
+            blending smart predictions with a warm, neon-inspired interface 
+            that supports wellbeing and awareness.
+        </p>
+        <p>
+            Whether you're tracking regularly, exploring PCOD/PCOS, or learning about your rhythm,
+            VELORA grows with you.
+        </p>
+        <small>Made for you • VELORA</small>
+    </div>
+</section>
+
+<!-- ---------------- SCRIPTS ---------------- -->
+<script type="module">
+ import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAB70oNmm0u_nZmkWMwqn1zTt6VSC3TL1s",
+    authDomain: "velora-5ecc4.firebaseapp.com",
+    projectId: "velora-5ecc4",
+    storageBucket: "velora-5ecc4.firebasestorage.app",
+    messagingSenderId: "741786125820",
+    appId: "1:741786125820:web:77ab1efe980f00bcdd5e79"
+  };
+
+ const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const messaging = getMessaging(app);
+
+
+
+
+  const nameEl = document.getElementById("username-display");
+
+  onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    nameEl.textContent = "Guest";
+    return;
+  }
+
+  // Show name
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    nameEl.textContent = snap.exists() ? snap.data().name : user.email;
+  } catch {
+    nameEl.textContent = "User";
+  }
+
+  // 🔔 Ask for notification permission AFTER login
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") return;
+
+  try {
+    const token = await getToken(messaging, {
+      vapidKey: "BLOEgk_rQZd3zlcJK-PZ9vtHD7vGD5YQdYkSdDuQu8yi4O8yRVlQWVrIYwGqgH64j4_GKKM44F0W7c6C_Ny19jE"
+    });
+
+    console.log("🔥 FCM Token:", token);
+
+    await setDoc(
+      doc(db, "users", user.uid, "devices", token),
+      {
+        token,
+        platform: "web",
+        createdAt: new Date()
+      }
+    );
+
+    console.log("✅ Device linked to user");
+  } catch (err) {
+    console.error("FCM error", err);
+  }
+});
+
+
+
+  window.goToProfile = function () {
+    const user = auth.currentUser;
+    if (user) {
+      window.location.href = "profile.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  };
+  if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    .then(() => console.log("Service worker registered"))
+    .catch(err => console.error("SW error", err));
+}
+
+</script>
+
+<script>
+    if ("Notification" in window) {
+      Notification.requestPermission().then(permission => {
+        console.log("Notification permission:", permission);
+      });
+    }
+    </script>
+    
+
+</body>
+</html>

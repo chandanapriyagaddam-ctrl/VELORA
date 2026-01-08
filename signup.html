@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VELORA – Sign Up</title>
+
+<style>
+/* ---------------- GLOBAL PAGE BACKGROUND ---------------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("signup-bg.jpg") center/cover no-repeat;
+    position: relative;
+}
+
+/* Dark overlay for better text readability */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(1px);
+}
+
+/* ---------------- SIGNUP CARD ---------------- */
+.signup-card {
+    position: relative;
+    width: 430px;
+    padding: 40px 35px;
+    border-radius: 22px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 35px rgba(255, 0, 64, 0.35);
+    text-align: center;
+    color: #fff;
+}
+
+/* ---------------- TEXT STYLES ---------------- */
+.logo-text {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #ff0040, #ff5277);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+}
+
+.signup-title {
+    font-size: 24px;
+    margin-bottom: 28px;
+    color: #ffefef;
+}
+
+/* ---------------- INPUT FIELDS ---------------- */
+.input-field {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 15px;
+}
+
+.input-field::placeholder {
+    color: #d8d8d8;
+}
+
+/* ---------------- SIGNUP BUTTON ---------------- */
+.signup-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(to right, #ff0040, #ff5277);
+    color: #fff;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 64, 0.5);
+    transition: 0.25s;
+}
+
+.signup-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(255, 0, 100, 0.7);
+}
+
+/* ---------------- LOGIN LINK ---------------- */
+.login-link {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #dcdcdc;
+}
+
+.login-link a {
+    color: #ff5277;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="signup-card">
+    <div class="logo-text">VELORA</div>
+    <div class="signup-title">Sign up</div>
+
+    <input type="text" class="input-field" placeholder="Name" id="name" />
+    <input type="email" class="input-field" placeholder="Email" id="email" />
+    <input type="password" class="input-field" placeholder="Password" id="password" />
+
+    <button class="signup-btn" onclick="signup()">Sign up</button>
+
+    <div class="login-link">
+        Already have an account? <a href="login.html">Log in</a>
+    </div>
+</div>
+
+<script type="module">
+  // Firebase core
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+
+  // Firebase Auth
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  // Firestore
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAB70oNmm0u_nZmkWMwqn1zTt6VSC3TL1s",
+    authDomain: "velora-5ecc4.firebaseapp.com",
+    projectId: "velora-5ecc4",
+    storageBucket: "velora-5ecc4.firebasestorage.app",
+    messagingSenderId: "741786125820",
+    appId: "1:741786125820:web:77ab1efe980f00bcdd5e79"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  console.log("🔥 Firebase fully connected");
+</script>
+
+
+<script type="module">
+  import {
+    getAuth,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    doc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+  const auth = getAuth();
+  const db = getFirestore();
+
+  // 👇 This matches onclick="signup()"
+  window.signup = async function () {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!name || !email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        email: email,
+        createdAt: new Date()
+      });
+
+      alert("Signup successful!");
+      window.location.href = "index.html";
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+</script>
+
+
+
+</body>
+</html>
