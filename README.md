@@ -8,6 +8,7 @@ Unlike traditional period trackers, VELORA goes beyond basic date prediction by 
 educational support, nutritional guidance, and a secure community platform.
 
 ❗ Problem Statement
+
 Many existing menstrual tracking solutions:
 -Focus only on cycle prediction
 -Lack awareness about PCOD/PCOS and health conditions
